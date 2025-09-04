@@ -5,9 +5,15 @@ import 'package:sport_profile_208415/widgets/inner_shadow_box.dart';
 import '../../utils/utils.dart';
 
 class CustomIconButton extends StatelessWidget {
-  const CustomIconButton({super.key, required this.iconPath, this.onTap});
+  const CustomIconButton({
+    super.key,
+    required this.iconPath,
+    this.onTap,
+    this.borderRadius,
+  });
 
   final String iconPath;
+  final double? borderRadius;
   final VoidCallback? onTap;
 
   @override
@@ -17,7 +23,7 @@ class CustomIconButton extends StatelessWidget {
       child: CustomPaint(
         painter: InnerShadowRRectPainter(
           blur: 40,
-          borderRadius: 14,
+          borderRadius: borderRadius ?? 14,
           color: Colors.white.withAlpha(4),
         ),
         child: Container(
@@ -25,7 +31,7 @@ class CustomIconButton extends StatelessWidget {
           height: 40.r,
           decoration: BoxDecoration(
             gradient: AppTheme.blackGradient,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(borderRadius ?? 14),
             border: Border.all(
               width: 1.sp,
               color: Colors.white.withValues(alpha: 0.01),

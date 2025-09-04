@@ -9,3 +9,5 @@ export 'radar_chart_painter.dart';
 export 'buttons/buttons.dart';
 export 'clippers/clippers.dart';
 export 'cards/cards.dart';
+export 'dropdowns/dropdowns.dart';
+export 'skill_counter.dart';

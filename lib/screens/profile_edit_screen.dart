@@ -16,17 +16,13 @@ class ProfileEditScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 56.h),
             child: Column(
               children: [
-                SafeArea(child: ProfileCard()),
+                SafeArea(bottom: false, child: ProfileCard()),
                 SizedBox(height: 16.h),
                 CustomImagePicker(text: "Upload profile image"),
                 SizedBox(height: 16.h),
                 CustomTextField1(title: 'Name', icon: 'assets/png/profile.png'),
                 SizedBox(height: 16.h),
-                CustomSelector(
-                  title: "Position",
-                  icon: 'assets/png/puzzle.png',
-                  value: 'Ahmad Septimus',
-                ),
+                PositionsDropdown(),
                 SizedBox(height: 16.h),
                 CustomTextField1(title: 'Age', icon: 'assets/png/calendar.png'),
                 SizedBox(height: 16.h),

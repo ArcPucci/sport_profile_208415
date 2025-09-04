@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sport_profile_208415/widgets/radar_chart_painter.dart';
 
 import '../../utils/utils.dart';
 import '../widgets.dart';
 
-class SkillsCard extends StatelessWidget {
-  const SkillsCard({super.key});
+class SkillsChart extends StatelessWidget {
+  const SkillsChart({super.key});
 
   @override
   Widget build(BuildContext context) {

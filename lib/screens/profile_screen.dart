@@ -16,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 56.h),
             child: Column(
               children: [
-                SafeArea(child: ProfileCard()),
+                SafeArea(bottom: false, child: ProfileCard()),
                 SizedBox(height: 32.h),
                 SizedBox(
                   width: 358.w,
@@ -56,12 +56,12 @@ class ProfileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Skills", style: AppTextStyles.ts20_600),
-                      EditButton2(),
+                      EditButton2(onTap: () => context.go('/skillsEdit')),
                     ],
                   ),
                 ),
                 SizedBox(height: 16.h),
-                SkillsCard(),
+                SkillsChart(),
                 SizedBox(height: 500.h),
               ],
             ),

@@ -53,6 +53,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     router = GoRouter(
+      initialLocation: '/skillsEdit',
       routes: [
         ShellRoute(
           builder: (context, state, child) =>
@@ -73,6 +74,15 @@ class _MyAppState extends State<MyApp> {
                         context: context,
                         state: state,
                         child: ProfileEditScreen(),
+                      ),
+                ),
+                GoRoute(
+                  path: 'skillsEdit',
+                  pageBuilder: (context, state) =>
+                      buildPageWithDefaultTransition(
+                        context: context,
+                        state: state,
+                        child: SkillsEditScreen(),
                       ),
                 ),
               ],
