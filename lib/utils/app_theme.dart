@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static const Color green = Color(0xFF67D27F);
+  static const Color grey = Color(0xFF191818);
   static const Color red = Color(0xFFFF4804);
+  static const Color red2 = Color(0xFFFF4C09);
 
   static const LinearGradient blackGradient = LinearGradient(
     begin: Alignment.topCenter,

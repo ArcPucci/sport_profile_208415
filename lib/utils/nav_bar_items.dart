@@ -7,17 +7,22 @@ final List<NavBarItem> navBarItems = [
     asset: "assets/png/profile.png",
     path: "/",
   ),
-  NavBarItem(id: 1, title: "Matches", asset: "assets/png/list.png", path: "/"),
+  NavBarItem(
+    id: 1,
+    title: "Matches",
+    asset: "assets/png/list.png",
+    path: "/matches",
+  ),
   NavBarItem(
     id: 2,
     title: "Statistic",
     asset: "assets/png/chart.png",
-    path: "/",
+    path: "/statistic",
   ),
   NavBarItem(
     id: 3,
     title: "Settings",
     asset: "assets/png/settings.png",
-    path: "/",
+    path: "/settings",
   ),
 ];

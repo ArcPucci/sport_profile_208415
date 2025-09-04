@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_profile_208415/utils/utils.dart';
@@ -5,7 +7,9 @@ import 'package:sport_profile_208415/utils/utils.dart';
 import '../widgets.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key});
+  const ProfileCard({super.key, this.path});
+
+  final String? path;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,14 @@ class ProfileCard extends StatelessWidget {
                 child: Container(
                   width: 227.w,
                   height: 166.h,
-                  color: Colors.green,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: path == null
+                          ? AssetImage('assets/png/avatar.png')
+                          : FileImage(File(path!)),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   alignment: Alignment.bottomCenter,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
