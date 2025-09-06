@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/utils.dart';
@@ -8,14 +9,20 @@ class CustomTextField2 extends StatelessWidget {
   const CustomTextField2({
     super.key,
     required this.title,
-    required this.icon,
+    this.icon = '',
     this.controller,
     required this.suffix,
+    this.hasIcon = true,
+    this.type,
+    this.maxLength = 4,
   });
 
+  final int? maxLength;
+  final TextInputType? type;
   final String title;
   final String icon;
   final String suffix;
+  final bool hasIcon;
   final TextEditingController? controller;
 
   @override
@@ -44,14 +51,16 @@ class CustomTextField2 extends StatelessWidget {
         padding: EdgeInsets.only(left: 16.w),
         child: Row(
           children: [
-            Image.asset(
-              icon,
-              width: 20.r,
-              height: 20.r,
-              color: AppTheme.green,
-              fit: BoxFit.fill,
-            ),
-            SizedBox(width: 16.w),
+            if (hasIcon) ...[
+              Image.asset(
+                icon,
+                width: 20.r,
+                height: 20.r,
+                color: AppTheme.green,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(width: 16.w),
+            ],
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,6 +72,12 @@ class CustomTextField2 extends StatelessWidget {
                   ),
                   TextField(
                     style: AppTextStyles.ts14_400,
+                    keyboardType: type ?? TextInputType.number,
+                    controller: controller,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(maxLength),
+                      FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$')),
+                    ],
                     decoration: InputDecoration.collapsed(
                       hintText: 'Type here...',
                       hintStyle: AppTextStyles.ts14_400.copyWith(

@@ -1,0 +1,51 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_profile_208415/widgets/widgets.dart';
+
+import '../utils/utils.dart';
+
+class CustomContainer extends StatelessWidget {
+  const CustomContainer({
+    super.key,
+    required this.width,
+    required this.height,
+    this.padding,
+    required this.child,
+  });
+
+  final double width;
+  final double height;
+  final EdgeInsets? padding;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: InnerShadowRRectPainter(
+        blur: 40,
+        color: Colors.white.withAlpha(4),
+      ),
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          gradient: AppTheme.blackGradient,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            width: 1.sp,
+            color: Colors.white.withValues(alpha: 0.01),
+          ),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 5),
+              blurRadius: 20,
+              color: Colors.black.withValues(alpha: 0.5),
+            ),
+          ],
+        ),
+        padding: padding,
+        child: child,
+      ),
+    );
+  }
+}

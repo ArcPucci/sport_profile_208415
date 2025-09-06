@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/utils.dart';
@@ -8,12 +9,16 @@ class CustomTextField1 extends StatelessWidget {
   const CustomTextField1({
     super.key,
     required this.title,
-    required this.icon,
+    this.icon = '',
     this.controller,
+    this.hasIcon = true,
+    this.maxLength = 18,
   });
 
+  final int? maxLength;
   final String title;
   final String icon;
+  final bool hasIcon;
   final TextEditingController? controller;
 
   @override
@@ -42,14 +47,16 @@ class CustomTextField1 extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Row(
           children: [
-            Image.asset(
-              icon,
-              width: 20.r,
-              height: 20.r,
-              color: AppTheme.green,
-              fit: BoxFit.fill,
-            ),
-            SizedBox(width: 16.w),
+            if (hasIcon) ...[
+              Image.asset(
+                icon,
+                width: 20.r,
+                height: 20.r,
+                color: AppTheme.green,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(width: 16.w),
+            ],
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,6 +68,10 @@ class CustomTextField1 extends StatelessWidget {
                   ),
                   TextField(
                     style: AppTextStyles.ts14_400,
+                    controller: controller,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(maxLength),
+                    ],
                     decoration: InputDecoration.collapsed(
                       hintText: 'Type here...',
                       hintStyle: AppTextStyles.ts14_400.copyWith(

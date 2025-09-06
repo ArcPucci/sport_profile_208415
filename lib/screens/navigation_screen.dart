@@ -10,7 +10,10 @@ class NavigationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasNavBar = !path.contains('edit') && !path.contains('skillsEdit');
+    final hasNavBar =
+        !path.contains('edit') &&
+        !path.contains('skillsEdit') &&
+        !path.contains('create');
     return Scaffold(
       drawer: CustomDrawer(),
       body: Stack(
