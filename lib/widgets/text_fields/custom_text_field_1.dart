@@ -13,12 +13,14 @@ class CustomTextField1 extends StatelessWidget {
     this.controller,
     this.hasIcon = true,
     this.maxLength = 18,
+    this.formatters,
   });
 
   final int? maxLength;
   final String title;
   final String icon;
   final bool hasIcon;
+  final List<TextInputFormatter>? formatters;
   final TextEditingController? controller;
 
   @override
@@ -71,6 +73,7 @@ class CustomTextField1 extends StatelessWidget {
                     controller: controller,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(maxLength),
+                      ...formatters ?? [],
                     ],
                     decoration: InputDecoration.collapsed(
                       hintText: 'Type here...',

@@ -11,11 +11,13 @@ class LabeledButton2 extends StatelessWidget {
     this.width,
     this.height,
     this.onTap,
+    this.textColor,
   });
 
   final String title;
   final double? width;
   final double? height;
+  final Color? textColor;
   final VoidCallback? onTap;
 
   @override
@@ -25,7 +27,12 @@ class LabeledButton2 extends StatelessWidget {
       child: CustomContainer(
         width: width ?? 342.w,
         height: height ?? 64.h,
-        child: Center(child: Text(title, style: AppTextStyles.ts14_600)),
+        child: Center(
+          child: Text(
+            title,
+            style: AppTextStyles.ts14_600.copyWith(color: textColor),
+          ),
+        ),
       ),
     );
   }

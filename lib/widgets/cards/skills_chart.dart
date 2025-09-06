@@ -5,7 +5,9 @@ import '../../utils/utils.dart';
 import '../widgets.dart';
 
 class SkillsChart extends StatelessWidget {
-  const SkillsChart({super.key});
+  const SkillsChart({super.key, required this.stats});
+
+  final List<int> stats;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +40,9 @@ class SkillsChart extends StatelessWidget {
           size: Size(358.w, 288.h),
           painter: RadarChartPainter(
             features: ["SPD", "STA", "DEF", "SHT", "PAS"],
-            values: [35, 30, 20, 15, 25],
+            values: stats,
             ticks: 5,
-            maxValue: 50,
+            maxValue: 250,
           ),
         ),
       ),

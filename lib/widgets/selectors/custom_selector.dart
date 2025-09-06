@@ -68,12 +68,7 @@ class CustomSelector extends StatelessWidget {
                         color: Colors.white.withValues(alpha: 0.4),
                       ),
                     ),
-                    Text(
-                      value,
-                      style: AppTextStyles.ts14_400.copyWith(
-                        color: Colors.white.withValues(alpha: 0.2),
-                      ),
-                    ),
+                    Text(value, style: AppTextStyles.ts14_400),
                   ],
                 ),
               ),

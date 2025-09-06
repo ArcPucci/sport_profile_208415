@@ -74,6 +74,7 @@ class _FancyDropdownState<T> extends State<FancyDropdown<T>>
     } else {
       _showMenu();
     }
+    setState(() {});
   }
 
   void _showMenu() {

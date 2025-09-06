@@ -25,8 +25,12 @@ class AchievementsService {
     );
   }
 
-  Future<List<Achievement>> getAchievements() async {
-    final json = await _database.query(achievementsTable);
+  Future<List<Achievement>> getAchievements(int profileId) async {
+    final json = await _database.query(
+      achievementsTable,
+      where: 'profile_id = ?',
+      whereArgs: [profileId],
+    );
 
     if (json.isEmpty) return [];
 

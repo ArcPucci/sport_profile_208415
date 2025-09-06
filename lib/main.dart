@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sport_profile_208415/providers/achievements_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sport_profile_208415/providers/providers.dart';
 import 'package:sport_profile_208415/screens/screens.dart';
 import 'package:sport_profile_208415/services/services.dart';
 
@@ -16,10 +17,14 @@ void main() {
       final sqlService = SqlService();
       await sqlService.init();
 
+      final preferences = await SharedPreferences.getInstance();
+      final configService = ConfigService(preferences);
+
       runApp(
         ScreenUtilInit(
           designSize: Size(390, 844),
-          builder: (context, child) => MyApp(sqlService: sqlService),
+          builder: (context, child) =>
+              MyApp(sqlService: sqlService, configService: configService),
         ),
       );
     },
@@ -48,9 +53,14 @@ CustomTransitionPage buildPageWithDefaultTransition({
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key, required this.sqlService});
+  const MyApp({
+    super.key,
+    required this.sqlService,
+    required this.configService,
+  });
 
   final SqlService sqlService;
+  final ConfigService configService;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -127,12 +137,24 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider.value(value: widget.configService),
+        Provider(
+          create: (context) => ProfilesService(widget.sqlService.database),
+        ),
         Provider(
           create: (context) => AchievementsService(widget.sqlService.database),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-              AchievementsProvider(Provider.of(context, listen: false)),
+          create: (context) => ProfilesProvider(
+            Provider.of(context, listen: false),
+            widget.configService,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AchievementsProvider(
+            Provider.of(context, listen: false),
+            Provider.of(context, listen: false),
+          ),
         ),
       ],
       child: MaterialApp.router(

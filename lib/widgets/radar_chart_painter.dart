@@ -4,7 +4,7 @@ import 'package:sport_profile_208415/utils/utils.dart';
 
 class RadarChartPainter extends CustomPainter {
   final List<String> features;
-  final List<double> values;
+  final List<int> values;
   final int ticks;
   final double maxValue;
 

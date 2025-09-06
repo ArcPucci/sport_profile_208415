@@ -26,7 +26,7 @@ class SqlService {
 
   Future<void> init() async {
     final String dbPath = await getDatabasesPath();
-    final String path = join(dbPath, 'football_bet.db');
+    final String path = join(dbPath, 'sport_profile.db');
 
     _database = await openDatabase(path, version: 1, onCreate: _createDB);
   }
@@ -35,11 +35,26 @@ class SqlService {
     await db.execute('''
       CREATE TABLE $achievementsTable (
         id $idType,
+        profile_id $intType,
         title $textType,
         description $textType,
         xp $intType,
         cup $textType,
         is_achieved $intType
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE $profilesTable (
+        id $idType,
+        name $textType,
+        pos $textType,
+        age $intType,
+        nat $intType,
+        height $intType,
+        weight $intType,
+        team_name $textType,
+        team_logo $textType,
+        stats $textType
       )
     ''');
   }

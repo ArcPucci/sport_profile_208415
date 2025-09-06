@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sport_profile_208415/models/models.dart';
+import 'package:sport_profile_208415/providers/providers.dart';
 import 'package:sport_profile_208415/services/services.dart';
 
 class AchievementsProvider extends ChangeNotifier {
   final AchievementsService _achievementsService;
+  final ProfilesProvider _profilesProvider;
 
-  AchievementsProvider(this._achievementsService) {
+  AchievementsProvider(this._achievementsService, this._profilesProvider) {
     init();
   }
+
+  int get _profileId => _profilesProvider.profile.id;
 
   List<Achievement> _achievements = [];
 
@@ -33,7 +37,7 @@ class AchievementsProvider extends ChangeNotifier {
   }
 
   void init() async {
-    _achievements = await _achievementsService.getAchievements();
+    _achievements = await _achievementsService.getAchievements(_profileId);
     notifyListeners();
   }
 
@@ -45,13 +49,14 @@ class AchievementsProvider extends ChangeNotifier {
   ) async {
     final achievement = Achievement(
       id: 0,
+      profileId: _profileId,
       title: title,
       description: description,
       xp: xp,
       cup: cup,
     );
     await _achievementsService.createAchievement(achievement);
-    _achievements = await _achievementsService.getAchievements();
+    _achievements = await _achievementsService.getAchievements(_profileId);
     notifyListeners();
   }
 
@@ -59,7 +64,7 @@ class AchievementsProvider extends ChangeNotifier {
     await _achievementsService.updateAchievement(
       achievement.copyWith(isAchieved: true),
     );
-    _achievements = await _achievementsService.getAchievements();
+    _achievements = await _achievementsService.getAchievements(_profileId);
     notifyListeners();
   }
 }

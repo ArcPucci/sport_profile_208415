@@ -11,8 +11,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AchievementsProvider>(
-      builder: (BuildContext context, value, Widget? child) {
+    return Consumer2<AchievementsProvider, ProfilesProvider>(
+      builder: (BuildContext context, value, value2, Widget? child) {
         return Stack(
           children: [
             Positioned.fill(
@@ -20,7 +20,10 @@ class ProfileScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 56.h),
                 child: Column(
                   children: [
-                    SafeArea(bottom: false, child: ProfileCard()),
+                    SafeArea(
+                      bottom: false,
+                      child: ProfileCard(profile: value2.profile),
+                    ),
                     SizedBox(height: 32.h),
                     SizedBox(
                       width: 358.w,
@@ -45,30 +48,33 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(height: 22.h),
                     SizedBox(
                       height: 160.h,
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            OverallScoreCard(
-                              xp: value.allXP,
-                              achieved: value.achievedAchievementsCount,
-                              allAchievements: value.allAchievementsCount,
-                            ),
-                            SizedBox(width: 16.w),
-                            Row(
-                              children: List.generate(
-                                value.openAchievements.length,
-                                (index) {
-                                  final achievement =
-                                      value.openAchievements[index];
-                                  return AchievementSmallCard(
-                                    achievement: achievement,
-                                  );
-                                },
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              OverallScoreCard(
+                                xp: value.allXP,
+                                achieved: value.achievedAchievementsCount,
+                                allAchievements: value.allAchievementsCount,
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 16.w),
+                              Row(
+                                children: List.generate(
+                                  value.openAchievements.length,
+                                  (index) {
+                                    final achievement =
+                                        value.openAchievements[index];
+                                    return AchievementSmallCard(
+                                      achievement: achievement,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -84,7 +90,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    SkillsChart(),
+                    SkillsChart(stats: value2.profile.stats),
                     SizedBox(height: 500.h),
                   ],
                 ),

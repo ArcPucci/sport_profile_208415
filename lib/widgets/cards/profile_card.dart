@@ -4,15 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sport_profile_208415/utils/utils.dart';
 
+import '../../models/models.dart';
 import '../widgets.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key, this.path});
+  const ProfileCard({super.key, required this.profile});
 
-  final String? path;
+  final Profile profile;
 
   @override
   Widget build(BuildContext context) {
+    final name = profile.name ?? "NAME";
+    final position = profile.pos ?? "";
+    final age = profile.age ?? '';
+    final nationalityID = profile.nat ?? -1;
+    final nationality = Nationality.empty();
+    final teamName = profile.teamName ?? "TEAM NAME";
+    final height = profile.height ?? '';
+    final weight = profile.weight ?? '';
+    final teamLogo = profile.teamLogo;
+
+    final path = profile.image;
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -33,7 +46,7 @@ class ProfileCard extends StatelessWidget {
                     image: DecorationImage(
                       image: path == null
                           ? AssetImage('assets/png/avatar.png')
-                          : FileImage(File(path!)),
+                          : FileImage(File(path)),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -41,14 +54,21 @@ class ProfileCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      teamLogo == null
+                          ? Image.asset(
+                              'assets/png/ball.png',
+                              width: 54.r,
+                              height: 28.r,
+                              fit: BoxFit.fill,
+                            )
+                          : Image.file(
+                              File(teamLogo),
+                              width: 54.r,
+                              height: 28.r,
+                              fit: BoxFit.cover,
+                            ),
                       Image.asset(
-                        'assets/png/eagle.png',
-                        width: 54.r,
-                        height: 28.r,
-                        fit: BoxFit.fill,
-                      ),
-                      Image.asset(
-                        'assets/png/usa.png',
+                        nationality.asset,
                         width: 54.r,
                         height: 28.r,
                         fit: BoxFit.fill,
@@ -71,7 +91,16 @@ class ProfileCard extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text("NAME", style: AppTextStyles.ts18_600),
+                SizedBox(
+                  width: 163.w,
+                  child: Center(
+                    child: Text(
+                      name,
+                      style: AppTextStyles.ts18_600,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
                 Container(
                   width: 163.w,
                   height: 67.h,
@@ -96,7 +125,7 @@ class ProfileCard extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text("QB", style: AppTextStyles.ts14_700),
+                                  Text(position, style: AppTextStyles.ts14_700),
                                   SizedBox(width: 4.w),
                                   Opacity(
                                     opacity: 0.6,
@@ -119,7 +148,7 @@ class ProfileCard extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text("18", style: AppTextStyles.ts14_700),
+                                  Text("$age", style: AppTextStyles.ts14_700),
                                   SizedBox(width: 4.w),
                                   Opacity(
                                     opacity: 0.6,
@@ -143,7 +172,7 @@ class ProfileCard extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Image.asset(
-                                    'assets/png/usa.png',
+                                    nationality.asset,
                                     width: 27.r,
                                     height: 14.r,
                                     fit: BoxFit.fill,
@@ -190,14 +219,17 @@ class ProfileCard extends StatelessWidget {
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "POS",
+                                          "HT",
                                           style: AppTextStyles.ts14_700,
                                         ),
                                       ),
                                     ),
                                   ),
                                   SizedBox(width: 4.w),
-                                  Text("176", style: AppTextStyles.ts14_700),
+                                  Text(
+                                    "$height",
+                                    style: AppTextStyles.ts14_700,
+                                  ),
                                 ],
                               ),
                             ),
@@ -213,14 +245,17 @@ class ProfileCard extends StatelessWidget {
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "AGE",
+                                          "WT",
                                           style: AppTextStyles.ts14_700,
                                         ),
                                       ),
                                     ),
                                   ),
                                   SizedBox(width: 4.w),
-                                  Text("67", style: AppTextStyles.ts14_700),
+                                  Text(
+                                    "$weight",
+                                    style: AppTextStyles.ts14_700,
+                                  ),
                                 ],
                               ),
                             ),
@@ -236,19 +271,26 @@ class ProfileCard extends StatelessWidget {
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "NAT",
+                                          "TM",
                                           style: AppTextStyles.ts14_700,
                                         ),
                                       ),
                                     ),
                                   ),
                                   SizedBox(width: 4.w),
-                                  Image.asset(
-                                    'assets/png/eagle.png',
-                                    width: 27.r,
-                                    height: 14.r,
-                                    fit: BoxFit.fill,
-                                  ),
+                                  teamLogo == null
+                                      ? Image.asset(
+                                          'assets/png/ball.png',
+                                          width: 27.r,
+                                          height: 14.r,
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Image.file(
+                                          File(teamLogo),
+                                          width: 27.r,
+                                          height: 14.r,
+                                          fit: BoxFit.cover,
+                                        ),
                                 ],
                               ),
                             ),

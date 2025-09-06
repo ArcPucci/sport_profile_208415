@@ -4,6 +4,7 @@ import 'models.dart';
 
 class Achievement {
   final int id;
+  final int profileId;
   final String title;
   final String description;
   final int xp;
@@ -12,6 +13,7 @@ class Achievement {
 
   Achievement({
     required this.id,
+    required this.profileId,
     required this.title,
     required this.description,
     required this.xp,
@@ -21,6 +23,7 @@ class Achievement {
 
   Achievement copyWith({
     int? id,
+    int? profileId,
     String? title,
     String? description,
     int? xp,
@@ -29,6 +32,7 @@ class Achievement {
   }) {
     return Achievement(
       id: id ?? this.id,
+      profileId: profileId ?? this.profileId,
       title: title ?? this.title,
       description: description ?? this.description,
       xp: xp ?? this.xp,
@@ -40,6 +44,7 @@ class Achievement {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'profile_id': profileId,
       'title': title,
       'description': description,
       'xp': xp,
@@ -51,6 +56,7 @@ class Achievement {
   factory Achievement.fromMap(Map<String, dynamic> map) {
     return Achievement(
       id: map['id'] as int,
+      profileId: map['profile_id'] as int,
       title: map['title'] as String,
       description: map['description'] as String,
       xp: map['xp'] as int,
