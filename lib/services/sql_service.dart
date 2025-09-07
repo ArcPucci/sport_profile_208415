@@ -3,6 +3,8 @@ import 'package:path/path.dart';
 import 'package:sport_profile_208415/services/services.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/models.dart';
+
 const idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
 const uuidType = "TEXT PRIMARY KEY";
 const boolType = "BOOLEAN DEFAULT FALSE";
@@ -48,6 +50,7 @@ class SqlService {
         id $idType,
         name $textType,
         pos $textType,
+        image $textType,
         age $intType,
         nat $intType,
         height $intType,
@@ -57,6 +60,11 @@ class SqlService {
         stats $textType
       )
     ''');
+
+    final map = Profile.empty().toMap();
+    map['id'] = null;
+
+    await db.insert(profilesTable, map);
   }
 
   Future<void> close() async {

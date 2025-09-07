@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../utils/utils.dart';
 
@@ -39,42 +40,45 @@ class _CustomNavBarState extends State<CustomNavBar> {
           final item = navBarItems[index];
           final isSelected = index == selected;
           return Expanded(
-            child: Opacity(
-              opacity: isSelected ? 1 : 0.4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 46.h,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset(
-                          item.asset,
-                          width: 24.r,
-                          height: 24.r,
-                          color: isSelected ? AppTheme.green : null,
-                          fit: BoxFit.fill,
-                        ),
-                        Text(
-                          item.title,
-                          style: AppTextStyles.ts12_600.copyWith(
-                            color: isSelected ? null : Colors.white,
+            child: InkWell(
+              onTap: () => context.go(item.path),
+              child: Opacity(
+                opacity: isSelected ? 1 : 0.4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 46.h,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            item.asset,
+                            width: 24.r,
+                            height: 24.r,
+                            color: isSelected ? AppTheme.green : null,
+                            fit: BoxFit.fill,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (isSelected)
-                    Container(
-                      width: 8.r,
-                      height: 8.r,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppTheme.green,
+                          Text(
+                            item.title,
+                            style: AppTextStyles.ts12_600.copyWith(
+                              color: isSelected ? null : Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                ],
+                    if (isSelected)
+                      Container(
+                        width: 8.r,
+                        height: 8.r,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppTheme.green,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           );

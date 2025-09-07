@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sport_profile_208415/models/models.dart';
 import 'package:sport_profile_208415/providers/providers.dart';
 import 'package:sport_profile_208415/utils/utils.dart';
 import 'package:sport_profile_208415/widgets/widgets.dart';
@@ -16,7 +15,7 @@ class SkillsEditScreen extends StatefulWidget {
 
 class _SkillsEditScreenState extends State<SkillsEditScreen> {
   late final ProfilesProvider _profilesProvider;
-  Profile _profile = Profile.empty();
+  List<int> stats = [0, 0, 0, 0, 0];
 
   final list = ["Speed", "Stamina", "Defense", "Shooting", "Passing"];
 
@@ -24,7 +23,7 @@ class _SkillsEditScreenState extends State<SkillsEditScreen> {
   void initState() {
     super.initState();
     _profilesProvider = context.read<ProfilesProvider>();
-    _profile = _profilesProvider.profile;
+    stats = List.from(_profilesProvider.profile.stats);
   }
 
   @override
@@ -38,7 +37,7 @@ class _SkillsEditScreenState extends State<SkillsEditScreen> {
               children: [
                 SafeArea(
                   bottom: false,
-                  child: SkillsChart(stats: _profile.stats),
+                  child: SkillsChart(stats: stats),
                 ),
                 SizedBox(height: 24.h),
                 Column(
@@ -47,7 +46,7 @@ class _SkillsEditScreenState extends State<SkillsEditScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: SkillCounter(
                         title: list[index],
-                        value: _profile.stats[index],
+                        value: stats[index],
                         onIncrease: () => increaseStat(index),
                         onDecrease: () => decreaseStat(index),
                       ),
@@ -59,6 +58,7 @@ class _SkillsEditScreenState extends State<SkillsEditScreen> {
                   title: 'Save',
                   width: 358.w,
                   onTap: () async {
+                    _profilesProvider.updateStats(stats);
                     context.pop();
                   },
                 ),
@@ -92,13 +92,13 @@ class _SkillsEditScreenState extends State<SkillsEditScreen> {
   }
 
   void increaseStat(int index) {
-    if (_profile.stats[index] < 250) _profile.stats[index]++;
+    if (stats[index] < 250) stats[index]++;
     setState(() {});
   }
 
   void decreaseStat(int index) {
-    if (_profile.stats[index] == 0) return;
-    _profile.stats[index]--;
+    if (stats[index] == 0) return;
+    stats[index]--;
     setState(() {});
   }
 }

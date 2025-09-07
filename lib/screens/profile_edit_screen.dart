@@ -40,11 +40,23 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     weightController.text = _profile.weight?.toString() ?? '';
     teamNameController.text = _profile.teamName ?? '';
 
-    nameController.addListener(() => setState(() {}));
-    ageController.addListener(() => setState(() {}));
-    heightController.addListener(() => setState(() {}));
-    weightController.addListener(() => setState(() {}));
-    teamNameController.addListener(() => setState(() {}));
+    nameController.addListener(
+      () => setState(() => _profile.name = nameController.text),
+    );
+    ageController.addListener(
+      () => setState(() => _profile.age = int.tryParse(ageController.text)),
+    );
+    heightController.addListener(
+      () =>
+          setState(() => _profile.height = int.tryParse(heightController.text)),
+    );
+    weightController.addListener(
+      () =>
+          setState(() => _profile.weight = int.tryParse(weightController.text)),
+    );
+    teamNameController.addListener(
+      () => setState(() => _profile.teamName = teamNameController.text),
+    );
   }
 
   @override

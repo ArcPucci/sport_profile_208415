@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sport_profile_208415/models/models.dart';
-import 'package:sport_profile_208415/providers/providers.dart';
 import 'package:sport_profile_208415/services/services.dart';
 
 class AchievementsProvider extends ChangeNotifier {
   final AchievementsService _achievementsService;
-  final ProfilesProvider _profilesProvider;
 
-  AchievementsProvider(this._achievementsService, this._profilesProvider) {
-    init();
-  }
+  AchievementsProvider(this._achievementsService);
 
-  int get _profileId => _profilesProvider.profile.id;
+  int _profileId = -1;
 
   List<Achievement> _achievements = [];
 
@@ -66,5 +62,10 @@ class AchievementsProvider extends ChangeNotifier {
     );
     _achievements = await _achievementsService.getAchievements(_profileId);
     notifyListeners();
+  }
+
+  void setProfileId(int id) {
+    _profileId = id;
+    init();
   }
 }

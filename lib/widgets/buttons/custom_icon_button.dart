@@ -10,8 +10,12 @@ class CustomIconButton extends StatelessWidget {
     required this.iconPath,
     this.onTap,
     this.borderRadius,
+    this.size,
+    this.iconSize,
   });
 
+  final double? size;
+  final double? iconSize;
   final String iconPath;
   final double? borderRadius;
   final VoidCallback? onTap;
@@ -27,8 +31,8 @@ class CustomIconButton extends StatelessWidget {
           color: Colors.white.withAlpha(4),
         ),
         child: Container(
-          width: 40.r,
-          height: 40.r,
+          width: size ?? 40.r,
+          height: size ?? 40.r,
           decoration: BoxDecoration(
             gradient: AppTheme.blackGradient,
             borderRadius: BorderRadius.circular(borderRadius ?? 14),
@@ -47,8 +51,8 @@ class CustomIconButton extends StatelessWidget {
           alignment: Alignment.center,
           child: Image.asset(
             iconPath,
-            width: 24.r,
-            height: 24.r,
+            width: iconSize ?? 24.r,
+            height: iconSize ?? 24.r,
             fit: BoxFit.fill,
           ),
         ),

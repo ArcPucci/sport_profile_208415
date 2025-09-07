@@ -93,6 +93,14 @@ class AppTextStyles {
     color: Colors.white,
   );
 
+  static final TextStyle ts10_400 = TextStyle(
+    fontFamily: _pp,
+    fontSize: 10.r,
+    height: 20 / 10,
+    fontWeight: FontWeight.w400,
+    color: Colors.white,
+  );
+
   static final TextStyle ts14_400 = TextStyle(
     fontFamily: _pp,
     fontSize: 14.r,

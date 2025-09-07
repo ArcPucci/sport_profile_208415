@@ -28,7 +28,7 @@ class Profile {
   });
 
   factory Profile.empty() =>
-      Profile(id: -1, name: '', stats: [125, 125, 125, 125, 125]);
+      Profile(id: -1, name: 'Player #1', stats: [125, 125, 125, 125, 125]);
 
   Map<String, dynamic> toMap() {
     return {

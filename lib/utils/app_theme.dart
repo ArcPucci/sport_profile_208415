@@ -7,7 +7,9 @@ class AppTheme {
   static const Color red = Color(0xFFFF4804);
   static const Color red2 = Color(0xFFFF4C09);
   static const Color red3 = Color(0xFFFF4B08);
+  static const Color red4 = Color(0xFFFF4A07);
   static const Color blue = Color(0xFF058FFF);
+  static const Color blue2 = Color(0xFF65B6D1);
   static const Color purple = Color(0xFF8E05FF);
 
   static const LinearGradient blackGradient = LinearGradient(

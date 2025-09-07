@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     router = GoRouter(
-      initialLocation: '/',
+      initialLocation: '/matches',
       routes: [
         ShellRoute(
           builder: (context, state, child) =>
@@ -127,6 +127,14 @@ class _MyAppState extends State<MyApp> {
                 ),
               ],
             ),
+            GoRoute(
+              path: '/matches',
+              pageBuilder: (context, state) => buildPageWithDefaultTransition(
+                context: context,
+                state: state,
+                child: MatchesScreen(),
+              ),
+            ),
           ],
         ),
       ],
@@ -145,15 +153,14 @@ class _MyAppState extends State<MyApp> {
           create: (context) => AchievementsService(widget.sqlService.database),
         ),
         ChangeNotifierProvider(
-          create: (context) => ProfilesProvider(
-            Provider.of(context, listen: false),
-            widget.configService,
-          ),
+          create: (context) =>
+              AchievementsProvider(Provider.of(context, listen: false)),
         ),
         ChangeNotifierProvider(
-          create: (context) => AchievementsProvider(
+          create: (context) => ProfilesProvider(
             Provider.of(context, listen: false),
             Provider.of(context, listen: false),
+            widget.configService,
           ),
         ),
       ],
