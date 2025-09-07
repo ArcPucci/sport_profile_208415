@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sport_profile_208415/utils/utils.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/widgets.dart';
 
@@ -17,29 +17,11 @@ class MatchesScreen extends StatelessWidget {
             width: 358.w,
             child: Row(
               children: [
-                CustomIconButton(iconPath: 'assets/png/menu.png'),
+                ProfilesMenuDrawer(),
                 SizedBox(width: 16.w),
-                CustomContainer(
-                  width: 97.w,
-                  height: 40.h,
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/png/filter.png',
-                        width: 16.r,
-                        height: 16.r,
-                        fit: BoxFit.fill,
-                      ),
-                      SizedBox(width: 8.w),
-                      Opacity(
-                        opacity: 0.4,
-                        child: Text("Filters", style: AppTextStyles.ts14_400),
-                      ),
-                    ],
-                  ),
-                ),
+                FiltersDrawer(),
                 Spacer(),
-                CreateButton(),
+                CreateButton(onTap: () => '/matches/create'),
               ],
             ),
           ),
@@ -59,7 +41,9 @@ class MatchesScreen extends StatelessWidget {
             child: ListView.separated(
               padding: EdgeInsets.only(top: 32.h, bottom: 200.h),
               itemBuilder: (context, index) {
-                return Center(child: MatchCard());
+                return Center(
+                  child: MatchCard(onTap: () => context.go('/matches/info')),
+                );
               },
               separatorBuilder: (context, index) {
                 return SizedBox(height: 16.h);

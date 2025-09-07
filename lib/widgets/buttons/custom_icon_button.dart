@@ -12,8 +12,10 @@ class CustomIconButton extends StatelessWidget {
     this.borderRadius,
     this.size,
     this.iconSize,
+    this.globalKey,
   });
 
+  final GlobalKey? globalKey;
   final double? size;
   final double? iconSize;
   final String iconPath;
@@ -23,6 +25,7 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: globalKey,
       onTap: onTap,
       child: CustomPaint(
         painter: InnerShadowRRectPainter(

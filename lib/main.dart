@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     router = GoRouter(
-      initialLocation: '/matches',
+      initialLocation: '/',
       routes: [
         ShellRoute(
           builder: (context, state, child) =>
@@ -134,6 +134,37 @@ class _MyAppState extends State<MyApp> {
                 state: state,
                 child: MatchesScreen(),
               ),
+              routes: [
+                GoRoute(
+                  path: 'info',
+                  pageBuilder: (context, state) =>
+                      buildPageWithDefaultTransition(
+                        context: context,
+                        state: state,
+                        child: MatchInfoScreen(),
+                      ),
+                  routes: [
+                    GoRoute(
+                      path: 'edit',
+                      pageBuilder: (context, state) =>
+                          buildPageWithDefaultTransition(
+                            context: context,
+                            state: state,
+                            child: MatchCreationScreen(isEdit: true),
+                          ),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: 'create',
+                  pageBuilder: (context, state) =>
+                      buildPageWithDefaultTransition(
+                        context: context,
+                        state: state,
+                        child: MatchCreationScreen(),
+                      ),
+                ),
+              ],
             ),
           ],
         ),

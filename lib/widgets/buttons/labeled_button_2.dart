@@ -12,8 +12,12 @@ class LabeledButton2 extends StatelessWidget {
     this.height,
     this.onTap,
     this.textColor,
+    this.borderRadius,
+    this.bgColor,
   });
 
+  final Color? bgColor;
+  final double? borderRadius;
   final String title;
   final double? width;
   final double? height;
@@ -25,6 +29,8 @@ class LabeledButton2 extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: CustomContainer(
+        bgColor: bgColor,
+        borderRadius: borderRadius,
         width: width ?? 342.w,
         height: height ?? 64.h,
         child: Center(

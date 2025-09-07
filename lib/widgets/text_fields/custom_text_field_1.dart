@@ -14,8 +14,10 @@ class CustomTextField1 extends StatelessWidget {
     this.hasIcon = true,
     this.maxLength = 18,
     this.formatters,
+    this.width,
   });
 
+  final double? width;
   final int? maxLength;
   final String title;
   final String icon;
@@ -32,7 +34,7 @@ class CustomTextField1 extends StatelessWidget {
         color: Colors.white.withAlpha(4),
       ),
       child: Container(
-        width: 358.w,
+        width: width ?? 358.w,
         height: 72.h,
         decoration: BoxDecoration(
           gradient: AppTheme.blackGradient,

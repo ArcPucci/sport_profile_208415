@@ -12,19 +12,15 @@ class FancyDropdown<T> extends StatefulWidget {
   final List<CustomPopupMenuItem<T>> items;
   final ValueChanged<T> onChanged;
 
-  /// билд контейнера (главная кнопка)
   final Widget Function(BuildContext context, T value, bool isOpen)
   childBuilder;
 
-  /// билд элемента (позволяет кастомить)
   final Widget Function(
     BuildContext context,
     CustomPopupMenuItem<T> item,
     bool isSelected,
   )?
   itemBuilder;
-
-  /// максимальная высота списка
   final double maxMenuHeight;
 
   const FancyDropdown({

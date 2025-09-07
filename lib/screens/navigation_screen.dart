@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sport_profile_208415/widgets/custom_drawer.dart';
-import 'package:sport_profile_208415/widgets/custom_nav_bar.dart';
+import 'package:sport_profile_208415/widgets/widgets.dart';
 
 class NavigationScreen extends StatelessWidget {
   const NavigationScreen({super.key, required this.path, required this.child});
@@ -13,10 +12,10 @@ class NavigationScreen extends StatelessWidget {
     final hasNavBar =
         !path.contains('edit') &&
         !path.contains('skillsEdit') &&
-        !path.contains('create');
-    return Scaffold(
-      drawer: CustomDrawer(),
-      body: Stack(
+        !path.contains('create') &&
+        !path.contains('info');
+    return Material(
+      child: Stack(
         alignment: Alignment.center,
         children: [
           Positioned.fill(

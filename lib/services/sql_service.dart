@@ -60,6 +60,20 @@ class SqlService {
         stats $textType
       )
     ''');
+    await db.execute('''
+      CREATE TABLE $matchesTable (
+        id $idType,
+        profile_id $intType,
+        match_type $intType,
+        created $intType,
+        duration $intType,
+        team_a $textType,
+        team_b $textType,
+        score_a $intType,
+        score_b $intType,
+        stats $textType
+      )
+    ''');
 
     final map = Profile.empty().toMap();
     map['id'] = null;

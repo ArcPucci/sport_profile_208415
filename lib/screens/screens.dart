@@ -1,5 +1,7 @@
 export 'onboarding_screen.dart';
 export 'matches_screen.dart';
+export 'match_info_screen.dart';
+export 'match_creation_screen.dart';
 export 'navigation_screen.dart';
 export 'profile_screen.dart';
 export 'profile_edit_screen.dart';

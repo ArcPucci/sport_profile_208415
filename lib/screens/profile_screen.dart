@@ -104,10 +104,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CustomIconButton(
-                      iconPath: 'assets/png/menu.png',
-                      onTap: Scaffold.of(context).openDrawer,
-                    ),
+                    ProfilesMenuDrawer(),
                     EditButton(onTap: () => context.go('/edit')),
                   ],
                 ),

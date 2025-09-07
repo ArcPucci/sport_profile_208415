@@ -11,11 +11,15 @@ class CustomContainer extends StatelessWidget {
     required this.height,
     this.padding,
     required this.child,
+    this.borderRadius,
+    this.bgColor,
   });
 
   final double width;
   final double height;
   final EdgeInsets? padding;
+  final double? borderRadius;
+  final Color? bgColor;
   final Widget child;
 
   @override
@@ -23,6 +27,7 @@ class CustomContainer extends StatelessWidget {
     return CustomPaint(
       painter: InnerShadowRRectPainter(
         blur: 40,
+        borderRadius: borderRadius ?? 20,
         color: Colors.white.withAlpha(4),
       ),
       child: Container(
@@ -30,7 +35,7 @@ class CustomContainer extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           gradient: AppTheme.blackGradient,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(borderRadius ?? 14),
           border: Border.all(
             width: 1.sp,
             color: Colors.white.withValues(alpha: 0.01),
@@ -43,8 +48,9 @@ class CustomContainer extends StatelessWidget {
             ),
           ],
         ),
+        clipBehavior: Clip.antiAlias,
         padding: padding,
-        child: child,
+        child: Container(color: bgColor, child: child),
       ),
     );
   }
