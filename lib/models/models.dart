@@ -1,4 +1,5 @@
 export 'nav_bar_item.dart';
+export 'stats.dart';
 export 'match_type.dart';
 export 'match.dart';
 export 'cup.dart';

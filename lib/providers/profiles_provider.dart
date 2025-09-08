@@ -7,12 +7,14 @@ class ProfilesProvider extends ChangeNotifier {
   final AchievementsProvider _achievementsProvider;
   final MatchesProvider _matchesProvider;
   final ProfilesService _profilesService;
+  final StatsProvider _statsProvider;
   final ConfigService _configService;
 
   ProfilesProvider(
     this._achievementsProvider,
     this._matchesProvider,
     this._profilesService,
+    this._statsProvider,
     this._configService,
   ) {
     init();
@@ -35,6 +37,7 @@ class ProfilesProvider extends ChangeNotifier {
 
     _achievementsProvider.setProfileId(_profile.id);
     _matchesProvider.setProfileId(_profile.id);
+    _statsProvider.setProfile(_profile.id);
   }
 
   Future<void> updateProfile(Profile profile) async {
@@ -59,6 +62,7 @@ class ProfilesProvider extends ChangeNotifier {
     _profile = profile;
     _achievementsProvider.setProfileId(_profile.id);
     _matchesProvider.setProfileId(_profile.id);
+    _statsProvider.setProfile(_profile.id);
     await _configService.setProfile(_profile);
     notifyListeners();
   }

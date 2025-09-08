@@ -13,6 +13,14 @@ class AppTextStyles {
     color: AppTheme.green,
   );
 
+  static final TextStyle ts40_600 = TextStyle(
+    fontFamily: _pp,
+    fontSize: 40.r,
+    height: 48 / 40,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
+
   static final TextStyle ts14_700 = TextStyle(
     fontFamily: _pp,
     fontSize: 14.r,

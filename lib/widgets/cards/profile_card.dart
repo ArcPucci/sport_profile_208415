@@ -17,8 +17,7 @@ class ProfileCard extends StatelessWidget {
     final name = profile.name ?? "NAME";
     final position = profile.pos ?? "";
     final age = profile.age ?? '';
-    final nationalityID = profile.nat ?? -1;
-    final nationality = Nationality.empty();
+    final nationality = profile.nat;
     final teamName = profile.teamName ?? "TEAM NAME";
     final height = profile.height ?? '';
     final weight = profile.weight ?? '';

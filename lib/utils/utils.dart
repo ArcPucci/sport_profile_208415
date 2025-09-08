@@ -4,6 +4,7 @@ export 'match_types.dart';
 export 'personal_data.dart';
 export 'victory_types.dart';
 export 'nationalities.dart';
+export 'stats_list.dart';
 export 'cup_types.dart';
 export 'app_theme.dart';
 export 'nav_bar_items.dart';

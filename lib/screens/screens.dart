@@ -1,4 +1,6 @@
 export 'onboarding_screen.dart';
+export 'statistic_screen.dart';
+export 'settings_screen.dart';
 export 'matches_screen.dart';
 export 'match_info_screen.dart';
 export 'match_creation_screen.dart';

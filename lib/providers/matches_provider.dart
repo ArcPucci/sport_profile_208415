@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sport_profile_208415/providers/providers.dart';
 import 'package:sport_profile_208415/services/services.dart';
-import 'package:sport_profile_208415/utils/datetime_extensions.dart';
 import 'package:sport_profile_208415/utils/utils.dart';
 
 import '../models/models.dart';
 
 class MatchesProvider extends ChangeNotifier {
   final MatchesService _matchesService;
+  final StatsProvider _statsProvider;
 
-  MatchesProvider(this._matchesService);
+  MatchesProvider(this._matchesService, this._statsProvider);
 
   int _selectedProfile = -1;
 
@@ -44,6 +45,7 @@ class MatchesProvider extends ChangeNotifier {
   }
 
   void _updateMatches() async {
+    _statsProvider.updateMatches();
     final matches = await _matchesService.getMatches(_selectedProfile);
     if (_selectedTab == 0) {
       _matches = matches.where((e) => !e.isOver).toList();
@@ -133,6 +135,13 @@ class MatchesProvider extends ChangeNotifier {
   void resetFilters() {
     _filters = [];
     notifyListeners();
+    _updateMatches();
+  }
+
+  void reset() {
+    _dateTime = DateTime.now();
+    _selectedTab = 0;
+    _filters.clear();
     _updateMatches();
   }
 }

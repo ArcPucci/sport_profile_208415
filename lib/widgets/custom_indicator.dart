@@ -11,8 +11,10 @@ class CustomIndicator extends StatelessWidget {
     this.width,
     this.height,
     this.borderRadius,
+    this.color,
   });
 
+  final Color? color;
   final double percent;
   final double? width;
   final double? height;
@@ -44,7 +46,7 @@ class CustomIndicator extends StatelessWidget {
             width: (width ?? 200.w) * percent,
             height: height ?? 16.h,
             decoration: BoxDecoration(
-              color: AppTheme.green2,
+              color: color ?? AppTheme.green2,
               borderRadius: BorderRadius.circular(borderRadius ?? 40),
             ),
           ),

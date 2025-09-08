@@ -1,4 +1,6 @@
 export 'profile_card.dart';
+export 'last_matches_card.dart';
+export 'matches_stats_card.dart';
 export 'match_card.dart';
 export 'match_type_card.dart';
 export 'container_with_inner_shadow.dart';

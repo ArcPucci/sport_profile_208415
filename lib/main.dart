@@ -166,6 +166,14 @@ class _MyAppState extends State<MyApp> {
                 ),
               ],
             ),
+            GoRoute(
+              path: '/statistic',
+              pageBuilder: (context, state) => buildPageWithDefaultTransition(
+                context: context,
+                state: state,
+                child: StatisticScreen(),
+              ),
+            ),
           ],
         ),
       ],
@@ -192,10 +200,17 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (context) =>
-              MatchesProvider(Provider.of(context, listen: false)),
+              StatsProvider(Provider.of(context, listen: false)),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MatchesProvider(
+            Provider.of(context, listen: false),
+            Provider.of(context, listen: false),
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => ProfilesProvider(
+            Provider.of(context, listen: false),
             Provider.of(context, listen: false),
             Provider.of(context, listen: false),
             Provider.of(context, listen: false),

@@ -14,9 +14,14 @@ class MatchesScreen extends StatefulWidget {
 }
 
 class _MatchesScreenState extends State<MatchesScreen> {
+  late final MatchesProvider _matchesProvider;
+
   @override
   void initState() {
     super.initState();
+    _matchesProvider = context.read<MatchesProvider>();
+
+    _matchesProvider.reset();
   }
 
   @override

@@ -33,7 +33,7 @@ class Profile {
   factory Profile.empty() => Profile(
     id: -1,
     name: 'Player #1',
-    nat: nationalities[0],
+    nat: Nationality.empty(),
     stats: [125, 125, 125, 125, 125],
   );
 
@@ -57,7 +57,9 @@ class Profile {
     final statsJson = jsonDecode(map['stats']) as List<dynamic>;
     final stats = List<int>.from(statsJson.map((e) => e as int));
     final natId = (map['nat'] as int) == -1 ? null : map['nat'] as int;
-    final nat = nationalities.firstWhere((element) => element.id == natId);
+    final nat = natId == null
+        ? Nationality.empty()
+        : nationalities.firstWhere((element) => element.id == natId);
     return Profile(
       id: map['id'] as int,
       name: (map['name'] as String).isEmpty ? null : map['name'] as String,
