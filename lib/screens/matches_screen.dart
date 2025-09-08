@@ -39,6 +39,14 @@ class _MatchesScreenState extends State<MatchesScreen> {
                   ],
                 ),
               ),
+              if (value.filters.isNotEmpty) ...[
+                SizedBox(height: 24.h),
+                FiltersRow(
+                  filters: value.filters,
+                  onDelete: value.removeFilter,
+                  onReset: value.resetFilters,
+                ),
+              ],
               SizedBox(height: 24.h),
               CustomMatchesTab(
                 selected: value.selectedTab,

@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_profile_208415/models/models.dart';
 
 import '../../utils/utils.dart';
 import '../widgets.dart';
@@ -10,11 +13,13 @@ class CustomSelector2 extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.value,
+    this.isOpen = false,
   });
 
+  final bool isOpen;
   final String title;
   final String icon;
-  final String value;
+  final Nationality value;
 
   @override
   Widget build(BuildContext context) {
@@ -64,23 +69,26 @@ class CustomSelector2 extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(
-                        'assets/png/usa.png',
+                        value.asset,
                         width: 27.r,
                         height: 14.r,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(width: 8.w),
-                      Text(value, style: AppTextStyles.ts14_400),
+                      Text(value.name, style: AppTextStyles.ts14_400),
                     ],
                   ),
                 ],
               ),
             ),
-            Image.asset(
-              'assets/png/arrow_down.png',
-              width: 24.r,
-              height: 24.r,
-              fit: BoxFit.fill,
+            Transform.rotate(
+              angle: isOpen ? pi : 0,
+              child: Image.asset(
+                'assets/png/arrow_down.png',
+                width: 24.r,
+                height: 24.r,
+                fit: BoxFit.fill,
+              ),
             ),
           ],
         ),

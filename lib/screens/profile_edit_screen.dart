@@ -97,10 +97,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   controller: ageController,
                 ),
                 SizedBox(height: 16.h),
-                CustomSelector2(
-                  title: 'Nationality',
-                  icon: 'assets/png/flag.png',
-                  value: 'USA',
+                NationalitiesDropdown(
+                  value: _profile.nat,
+                  onChanged: (nat) => setState(() => _profile.nat = nat),
                 ),
                 SizedBox(height: 16.h),
                 CustomTextField2(

@@ -7,16 +7,16 @@ import '../utils/utils.dart';
 class CustomContainer extends StatelessWidget {
   const CustomContainer({
     super.key,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
     this.padding,
     required this.child,
     this.borderRadius,
     this.bgColor,
   });
 
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final EdgeInsets? padding;
   final double? borderRadius;
   final Color? bgColor;

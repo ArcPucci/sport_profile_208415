@@ -58,6 +58,7 @@ class ProfilesProvider extends ChangeNotifier {
   void setProfile(Profile profile) async {
     _profile = profile;
     _achievementsProvider.setProfileId(_profile.id);
+    _matchesProvider.setProfileId(_profile.id);
     await _configService.setProfile(_profile);
     notifyListeners();
   }

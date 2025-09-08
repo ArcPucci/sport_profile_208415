@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sport_profile_208415/services/services.dart';
 import 'package:sport_profile_208415/utils/datetime_extensions.dart';
+import 'package:sport_profile_208415/utils/utils.dart';
 
 import '../models/models.dart';
 
@@ -29,6 +30,10 @@ class MatchesProvider extends ChangeNotifier {
 
   int get selectedTab => _selectedTab;
 
+  List<String> _filters = [];
+
+  List<String> get filters => _filters;
+
   void setProfileId(int profileId) async {
     _selectedProfile = profileId;
     _updateMatches();
@@ -48,6 +53,30 @@ class MatchesProvider extends ChangeNotifier {
 
     final now = _dateTime.withZeroTime;
     _matches.removeWhere((e) => !e.created.withZeroTime.isAtSameMomentAs(now));
+
+    if (_filters.isNotEmpty) {
+      final Set list = {};
+
+      for (var match in _matches) {
+        if (_filters.contains(match.matchType.name)) {
+          list.add(match);
+        }
+        if (_filters.contains(victoryTypes[0]) && match.scoreA > match.scoreB) {
+          list.add(match);
+        }
+        if (_filters.contains(victoryTypes[1]) && match.scoreA < match.scoreB) {
+          list.add(match);
+        }
+        if (_filters.contains(victoryTypes[2]) &&
+            match.scoreA == match.scoreB) {
+          list.add(match);
+        }
+      }
+
+      print(list);
+
+      _matches = List.from(list);
+    }
 
     notifyListeners();
   }
@@ -85,6 +114,25 @@ class MatchesProvider extends ChangeNotifier {
 
   void deleteMatch() {
     _matchesService.deleteMatch(_matchModel.id);
+    _updateMatches();
+  }
+
+  void addFilter(String filter) {
+    if (_filters.contains(filter)) return;
+    _filters.add(filter);
+    notifyListeners();
+    _updateMatches();
+  }
+
+  void removeFilter(String filter) {
+    _filters.remove(filter);
+    notifyListeners();
+    _updateMatches();
+  }
+
+  void resetFilters() {
+    _filters = [];
+    notifyListeners();
     _updateMatches();
   }
 }
