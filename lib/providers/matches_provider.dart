@@ -144,4 +144,10 @@ class MatchesProvider extends ChangeNotifier {
     _filters.clear();
     _updateMatches();
   }
+
+  void clearAllData() async {
+    await _matchesService.deleteMatchesByProfileId(_selectedProfile);
+    _statsProvider.updateMatches();
+    _updateMatches();
+  }
 }

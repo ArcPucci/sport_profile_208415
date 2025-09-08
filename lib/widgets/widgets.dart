@@ -24,3 +24,6 @@ export 'filters_drawer.dart';
 export 'profiles_menu_drawer.dart';
 export 'actions_menu_2.dart';
 export 'filters_row.dart';
+export 'confirmation_dialog_2.dart';
+export 'confirmation_dialog_3.dart';
+export 'contact_dialog.dart';

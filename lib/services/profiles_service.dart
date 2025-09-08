@@ -77,4 +77,8 @@ class ProfilesService {
     if (res.isEmpty) return [];
     return res.map((e) => Profile.fromMap(e)).toList();
   }
+
+  Future<void> removeProfile(int id) async {
+    await _database.delete(profilesTable, where: 'id = ?', whereArgs: [id]);
+  }
 }

@@ -1,4 +1,5 @@
 export 'labeled_button_1.dart';
+export 'settings_button.dart';
 export 'custom_date_button.dart';
 export 'actions_menu_button.dart';
 export 'custom_calendar_button.dart';

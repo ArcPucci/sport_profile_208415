@@ -44,4 +44,12 @@ class MatchesService {
     if (maps.isEmpty) return [];
     return maps.map(MatchModel.fromMap).toList();
   }
+
+  Future<void> deleteMatchesByProfileId(int profileId) async {
+    await _database.delete(
+      matchesTable,
+      where: 'profile_id = ?',
+      whereArgs: [profileId],
+    );
+  }
 }

@@ -66,4 +66,16 @@ class ProfilesProvider extends ChangeNotifier {
     await _configService.setProfile(_profile);
     notifyListeners();
   }
+
+  void removeProfile() async {
+    if (_profiles.length == 1) return;
+    await _profilesService.removeProfile(_profile.id);
+    _profiles = await _profilesService.getProfiles();
+    _profile = _profiles.first;
+    _achievementsProvider.setProfileId(_profile.id);
+    _matchesProvider.setProfileId(_profile.id);
+    _statsProvider.setProfile(_profile.id);
+    await _configService.setProfile(_profile);
+    notifyListeners();
+  }
 }

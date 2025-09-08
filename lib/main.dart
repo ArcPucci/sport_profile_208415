@@ -174,6 +174,14 @@ class _MyAppState extends State<MyApp> {
                 child: StatisticScreen(),
               ),
             ),
+            GoRoute(
+              path: '/settings',
+              pageBuilder: (context, state) => buildPageWithDefaultTransition(
+                context: context,
+                state: state,
+                child: SettingsScreen(),
+              ),
+            ),
           ],
         ),
       ],
