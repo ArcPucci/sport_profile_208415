@@ -67,4 +67,32 @@ class Profile {
       stats: stats,
     );
   }
+
+  Profile copyWith({
+    int? id,
+    String? name,
+    String? pos,
+    String? image,
+    int? age,
+    int? nat,
+    int? height,
+    int? weight,
+    String? teamName,
+    String? teamLogo,
+    List<int>? stats,
+  }) {
+    return Profile(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      pos: pos ?? this.pos,
+      image: image ?? this.image,
+      age: age ?? this.age,
+      nat: nat ?? this.nat,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+      teamName: teamName ?? this.teamName,
+      teamLogo: teamLogo ?? this.teamLogo,
+      stats: stats ?? this.stats,
+    );
+  }
 }

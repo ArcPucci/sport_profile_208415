@@ -7,13 +7,22 @@ import 'package:sport_profile_208415/widgets/widgets.dart';
 import '../utils/utils.dart';
 
 class PopupUnderButton extends StatefulWidget {
-  const PopupUnderButton({super.key});
+  const PopupUnderButton({
+    super.key,
+    required this.onChanged,
+    required this.dateTime,
+  });
+
+  final DateTime dateTime;
+  final void Function(int, int) onChanged;
 
   @override
   State<PopupUnderButton> createState() => _PopupUnderButtonState();
 }
 
 class _PopupUnderButtonState extends State<PopupUnderButton> {
+  int _year = DateTime.now().year;
+
   final list = [
     "January",
     "February",
@@ -40,62 +49,102 @@ class _PopupUnderButtonState extends State<PopupUnderButton> {
     final Offset offset = button.localToGlobal(Offset.zero, ancestor: overlay);
 
     _overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        left: offset.dx,
-        top: offset.dy + button.size.height + 5,
-        child: Material(
-          color: Colors.transparent,
-          child: CustomPaint(
-            painter: InnerShadowRRectPainter(
-              color: Colors.white.withValues(alpha: 0.04),
-            ),
-            child: Container(
-              width: 224.w,
-              decoration: BoxDecoration(
-                gradient: AppTheme.blackGradient,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  width: 1.sp,
-                  color: Colors.white.withAlpha(1),
+      builder: (context) => Stack(
+        children: [
+          ModalBarrier(
+            color: Colors.transparent,
+            dismissible: true,
+            onDismiss: _hidePopup,
+          ),
+          Positioned(
+            left: offset.dx,
+            top: offset.dy + button.size.height + 5,
+            child: Material(
+              color: Colors.transparent,
+              child: CustomPaint(
+                painter: InnerShadowRRectPainter(
+                  color: Colors.white.withValues(alpha: 0.04),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    blurRadius: 20,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildCircle(pi / 2, () {}),
-                      Text("2025", style: AppTextStyles.ts14_400),
-                      _buildCircle(- pi / 2, () {}),
-                    ],
-                  ),
-                  SizedBox(height: 16.h),
-                  Container(width: 192.w, height: 1.sp, color: AppTheme.grey),
-                  SizedBox(height: 16.h),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(list[index], style: AppTextStyles.ts14_400);
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: 10.h);
-                    },
-                    itemCount: list.length,
-                  ),
-                ],
+                child: StatefulBuilder(
+                  builder:
+                      (
+                        BuildContext context,
+                        void Function(void Function()) setState,
+                      ) {
+                        return Container(
+                          width: 224.w,
+                          decoration: BoxDecoration(
+                            gradient: AppTheme.blackGradient,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              width: 1.sp,
+                              color: Colors.white.withAlpha(1),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.5),
+                                blurRadius: 20,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 16.h,
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _buildCircle(pi / 2, () {
+                                    if (_year <= 2015) return;
+                                    setState(() => _year--);
+                                  }),
+                                  Text("$_year", style: AppTextStyles.ts14_400),
+                                  _buildCircle(-pi / 2, () {
+                                    if (_year >= 2035) return;
+                                    setState(() => _year++);
+                                  }),
+                                ],
+                              ),
+                              SizedBox(height: 16.h),
+                              Container(
+                                width: 192.w,
+                                height: 1.sp,
+                                color: AppTheme.grey,
+                              ),
+                              SizedBox(height: 16.h),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      _hidePopup();
+                                      widget.onChanged.call(_year, index + 1);
+                                    },
+                                    child: Text(
+                                      list[index],
+                                      style: AppTextStyles.ts14_400,
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(height: 10.h);
+                                },
+                                itemCount: list.length,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
 
@@ -120,7 +169,7 @@ class _PopupUnderButtonState extends State<PopupUnderButton> {
       },
       child: Row(
         children: [
-          Text("August, 2025", style: AppTextStyles.ts14_400),
+          Text(widget.dateTime.monthAndYear, style: AppTextStyles.ts14_400),
           SizedBox(width: 8.w),
           Image.asset(
             'assets/png/arrow_down.png',

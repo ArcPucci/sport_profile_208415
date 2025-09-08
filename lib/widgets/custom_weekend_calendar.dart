@@ -6,7 +6,14 @@ import 'package:sport_profile_208415/utils/utils.dart';
 import 'package:sport_profile_208415/widgets/inner_shadow_box.dart';
 
 class WeekCalendar extends StatefulWidget {
-  const WeekCalendar({super.key});
+  const WeekCalendar({
+    super.key,
+    required this.dateTime,
+    required this.onChanged,
+  });
+
+  final DateTime dateTime;
+  final void Function(DateTime date) onChanged;
 
   @override
   State<WeekCalendar> createState() => _WeekCalendarState();
@@ -14,12 +21,17 @@ class WeekCalendar extends StatefulWidget {
 
 class _WeekCalendarState extends State<WeekCalendar> {
   late DateTime _currentWeekStart;
-  DateTime _selectedDay = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    _currentWeekStart = _getStartOfWeek(DateTime.now());
+    _currentWeekStart = _getStartOfWeek(widget.dateTime);
+  }
+
+  @override
+  didUpdateWidget(covariant WeekCalendar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _currentWeekStart = _getStartOfWeek(widget.dateTime);
   }
 
   DateTime _getStartOfWeek(DateTime date) {
@@ -59,12 +71,12 @@ class _WeekCalendarState extends State<WeekCalendar> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: days.map((date) {
               final isSelected =
-                  date.day == _selectedDay.day &&
-                  date.month == _selectedDay.month &&
-                  date.year == _selectedDay.year;
+                  date.day == widget.dateTime.day &&
+                  date.month == widget.dateTime.month &&
+                  date.year == widget.dateTime.year;
 
               return GestureDetector(
-                onTap: () => setState(() => _selectedDay = date),
+                onTap: () => widget.onChanged.call(date),
                 child: Container(
                   width: 37.w,
                   height: 42.h,

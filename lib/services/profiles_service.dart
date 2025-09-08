@@ -13,19 +13,22 @@ class ProfilesService {
 
   ProfilesService(this._database);
 
-  Future<void> createProfile() async {
+  Future<Profile> createProfile() async {
     final profile = Profile.empty();
     final map = profile.toMap();
 
     map['id'] = null;
     final id = await _database.insert(profilesTable, map);
-    map['name'] = "Player #${id + 1}";
+    map['id'] = id;
+    map['name'] = "Player #$id";
     await _database.update(
       profilesTable,
       map,
       where: 'id = ?',
       whereArgs: [id],
     );
+
+    return profile.copyWith(id: id);
   }
 
   Future<void> updateProfile(Profile profile) async {
@@ -40,7 +43,7 @@ class ProfilesService {
       profile.image = newPath;
     }
 
-    if(profile.teamLogo != null) {
+    if (profile.teamLogo != null) {
       final dir = await getApplicationDocumentsDirectory();
       final fileName = path.basename(profile.teamLogo!);
       final newPath = path.join(dir.path, fileName);

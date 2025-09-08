@@ -1,0 +1,18 @@
+final List<String> personalData = [
+  "Touchdowns",
+  "Passing Yards",
+  "Passing Touchdowns",
+  "Interceptions Thrown",
+  "Rushing Yards",
+  "Rushing Touchdowns",
+  "Receptions",
+  "Receiving Yards",
+  "Receiving Touchdowns",
+  "Tackles",
+  "Sacks",
+  "Interceptions Caught",
+  "Fumbles",
+  "Fumbles Lost",
+  "Field Goals Made",
+  "Kickoff Returns Yards",
+];

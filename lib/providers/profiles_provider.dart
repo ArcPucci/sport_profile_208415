@@ -5,11 +5,13 @@ import 'package:sport_profile_208415/services/services.dart';
 
 class ProfilesProvider extends ChangeNotifier {
   final AchievementsProvider _achievementsProvider;
+  final MatchesProvider _matchesProvider;
   final ProfilesService _profilesService;
   final ConfigService _configService;
 
   ProfilesProvider(
     this._achievementsProvider,
+    this._matchesProvider,
     this._profilesService,
     this._configService,
   ) {
@@ -32,6 +34,7 @@ class ProfilesProvider extends ChangeNotifier {
     if (id != -1) _profile = await _profilesService.getProfile(id);
 
     _achievementsProvider.setProfileId(_profile.id);
+    _matchesProvider.setProfileId(_profile.id);
   }
 
   Future<void> updateProfile(Profile profile) async {
@@ -42,6 +45,20 @@ class ProfilesProvider extends ChangeNotifier {
   void updateStats(List<int> stats) async {
     _profile.stats = stats;
     await _profilesService.updateProfile(_profile);
+    notifyListeners();
+  }
+
+  void addProfile() async {
+    _profile = await _profilesService.createProfile();
+    _profiles = await _profilesService.getProfiles();
+    await _configService.setProfile(_profile);
+    notifyListeners();
+  }
+
+  void setProfile(Profile profile) async {
+    _profile = profile;
+    _achievementsProvider.setProfileId(_profile.id);
+    await _configService.setProfile(_profile);
     notifyListeners();
   }
 }

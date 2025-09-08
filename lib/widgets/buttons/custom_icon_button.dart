@@ -13,8 +13,10 @@ class CustomIconButton extends StatelessWidget {
     this.size,
     this.iconSize,
     this.globalKey,
+    this.color,
   });
 
+  final Color? color;
   final GlobalKey? globalKey;
   final double? size;
   final double? iconSize;
@@ -56,6 +58,7 @@ class CustomIconButton extends StatelessWidget {
             iconPath,
             width: iconSize ?? 24.r,
             height: iconSize ?? 24.r,
+            color: color,
             fit: BoxFit.fill,
           ),
         ),

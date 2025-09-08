@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:sport_profile_208415/models/models.dart';
+import 'package:sport_profile_208415/providers/providers.dart';
 import 'package:sport_profile_208415/utils/utils.dart';
 import 'package:sport_profile_208415/widgets/widgets.dart';
 
@@ -14,7 +18,37 @@ class MatchCreationScreen extends StatefulWidget {
 }
 
 class _MatchCreationScreenState extends State<MatchCreationScreen> {
+  late final MatchesProvider _matchesProvider;
+
+  MatchType _matchType = matchTypes.first;
+  DateTime _dateTime = DateTime.now();
+
+  final durationController = TextEditingController();
+  final teamAController = TextEditingController();
+  final scoreAController = TextEditingController();
+  final teamBController = TextEditingController();
+  final scoreBController = TextEditingController();
+
+  List<int> stats = List.generate((16), (index) => 125);
+
   int _step = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _matchesProvider = Provider.of(context, listen: false);
+    if (widget.isEdit) {
+      final match = _matchesProvider.matchModel;
+      _matchType = match.matchType;
+      _dateTime = match.created;
+      durationController.text = match.duration.toString();
+      teamAController.text = match.teamA;
+      scoreAController.text = match.scoreA.toString();
+      teamBController.text = match.teamB;
+      scoreBController.text = match.scoreB.toString();
+      stats = List.from(match.stats);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +88,9 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
               return Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: MatchTypeCard(
-                  selected: index == 0,
+                  selected: matchType.id == _matchType.id,
                   matchType: matchType,
+                  onTap: () => setState(() => _matchType = matchType),
                 ),
               );
             }),
@@ -97,14 +132,15 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
           ),
           SizedBox(height: 24.h),
           CustomCalendarButton(
-            dateTime: DateTime.now(),
-            onDateSelected: (date) {},
+            dateTime: _dateTime,
+            onDateSelected: (date) => setState(() => _dateTime = date),
           ),
           SizedBox(height: 16.h),
           CustomTextField2(
             title: 'Duration',
             suffix: 'min',
             icon: 'assets/png/sandclock.png',
+            controller: durationController,
           ),
           SizedBox(height: 16.h),
           SizedBox(
@@ -116,11 +152,17 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
                   title: 'Team A',
                   width: 171.w,
                   icon: 'assets/png/ball2.png',
+                  controller: teamAController,
                 ),
                 CustomTextField1(
                   title: 'Score A',
                   width: 171.w,
                   icon: 'assets/png/hashtag.png',
+                  maxLength: 3,
+                  formatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$')),
+                  ],
+                  controller: scoreAController,
                 ),
               ],
             ),
@@ -135,11 +177,17 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
                   title: 'Team B',
                   width: 171.w,
                   icon: 'assets/png/ball2.png',
+                  controller: teamBController,
                 ),
                 CustomTextField1(
                   title: 'Score B',
                   width: 171.w,
                   icon: 'assets/png/hashtag.png',
+                  maxLength: 3,
+                  formatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$')),
+                  ],
+                  controller: scoreBController,
                 ),
               ],
             ),
@@ -181,14 +229,14 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
               child: Column(
                 children: [
                   Column(
-                    children: List.generate(15, (index) {
+                    children: List.generate(personalData.length, (index) {
                       return Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: SkillCounter(
-                          title: 'index $index',
-                          value: 125,
-                          onIncrease: () {},
-                          onDecrease: () {},
+                          title: personalData[index],
+                          value: stats[index],
+                          onIncrease: () => onIncrease(index),
+                          onDecrease: () => onDecrease(index),
                         ),
                       );
                     }),
@@ -252,10 +300,71 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
 
   void onNext() {
     if (_step == 2) {
+      if (widget.isEdit) {
+        MatchModel match = _matchesProvider.matchModel;
+        match = match.copyWith(
+          matchType: _matchType,
+          created: _dateTime,
+          duration: int.parse(durationController.text.trim()),
+          teamA: teamAController.text.trim(),
+          scoreA: int.parse(scoreAController.text.trim()),
+          teamB: teamBController.text.trim(),
+          scoreB: int.parse(scoreBController.text.trim()),
+          stats: stats,
+        );
+
+        _matchesProvider.saveMatch(match);
+      } else {
+        MatchModel match = MatchModel(
+          id: 0,
+          profileId: _matchesProvider.selectedProfile,
+          matchType: _matchType,
+          created: _dateTime,
+          duration: int.parse(durationController.text.trim()),
+          teamA: teamAController.text.trim(),
+          scoreA: int.parse(scoreAController.text.trim()),
+          teamB: teamBController.text.trim(),
+          scoreB: int.parse(scoreBController.text.trim()),
+          stats: stats,
+        );
+
+        _matchesProvider.createMatch(match);
+      }
+
+      context.pop();
+      return;
+    }
+
+    final duration = durationController.text.trim();
+    final teamA = teamAController.text.trim();
+    final scoreA = scoreAController.text.trim();
+    final teamB = teamBController.text.trim();
+    final scoreB = scoreBController.text.trim();
+
+    if (_step == 1 &&
+        (duration.isEmpty ||
+            teamA.isEmpty ||
+            scoreA.isEmpty ||
+            teamB.isEmpty ||
+            scoreB.isEmpty)) {
       return;
     }
 
     _step++;
+    setState(() {});
+  }
+
+  void onIncrease(int index) {
+    if (stats[index] < 250) {
+      stats[index]++;
+    }
+    setState(() {});
+  }
+
+  void onDecrease(int index) {
+    if (stats[index] > 0) {
+      stats[index]--;
+    }
     setState(() {});
   }
 }

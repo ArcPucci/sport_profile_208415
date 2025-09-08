@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sport_profile_208415/models/models.dart';
 
 import '../../utils/utils.dart';
 import '../widgets.dart';
 
 class MatchCard extends StatelessWidget {
-  const MatchCard({super.key, this.onTap});
+  const MatchCard({
+    super.key,
+    this.onTap,
+    required this.matchModel,
+    this.onEdit,
+    this.onDelete,
+  });
 
+  final MatchModel matchModel;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
   final VoidCallback? onTap;
 
   @override
@@ -44,19 +54,10 @@ class MatchCard extends StatelessWidget {
                         children: [
                           SizedBox(width: 16.r),
                           Text(
-                            "20.09.2025, 10:00 AM",
+                            matchModel.created.fullFormat,
                             style: AppTextStyles.ts14_400,
                           ),
-                          Opacity(
-                            opacity: 0.6,
-                            child: Image.asset(
-                              'assets/png/dot_menu.png',
-                              width: 16.r,
-                              height: 16.r,
-                              color: Colors.white,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
+                          ActionsMenu2(onEdit: onEdit, onDelete: onDelete),
                         ],
                       ),
                     ),
@@ -65,53 +66,108 @@ class MatchCard extends StatelessWidget {
                     SizedBox(height: 16.h),
                     SizedBox(
                       width: 358.w,
-                      child: Center(
-                        child: SizedBox(
-                          width: 326.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 115.w,
-                                child: Row(
-                                  children: [
-                                    CustomIconButton(
-                                      size: 32.r,
-                                      iconSize: 16.r,
-                                      iconPath: 'assets/png/eagles.png',
-                                      borderRadius: 32,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          if (matchModel.isOver &&
+                              matchModel.scoreA >= matchModel.scoreB)
+                            Positioned(
+                              left: 0,
+                              child: Container(
+                                width: 139.w,
+                                height: 32.h,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withAlpha(5),
+                                      Colors.white.withAlpha(0),
+                                    ],
+                                  ),
+                                  border: Border(
+                                    left: BorderSide(
+                                      width: 2.sp,
+                                      color: AppTheme.green,
                                     ),
-                                    SizedBox(width: 8.w),
-                                    Text("Eagles", style: AppTextStyles.ts14_400),
-                                  ],
+                                  ),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  TeamScore(),
-                                  SizedBox(width: 1),
-                                  TeamScore(),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 115.w,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text("Eagles", style: AppTextStyles.ts14_400),
-                                    SizedBox(width: 8.w),
-                                    CustomIconButton(
-                                      size: 32.r,
-                                      iconSize: 16.r,
-                                      iconPath: 'assets/png/eagles.png',
-                                      borderRadius: 32,
+                            ),
+                          if (matchModel.isOver &&
+                              matchModel.scoreA <= matchModel.scoreB)
+                            Positioned(
+                              right: 0,
+                              child: Container(
+                                width: 139.w,
+                                height: 32.h,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withAlpha(0),
+                                      Colors.white.withAlpha(5),
+                                    ],
+                                  ),
+                                  border: Border(
+                                    right: BorderSide(
+                                      width: 2.sp,
+                                      color: AppTheme.green,
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ],
+                            ),
+                          SizedBox(
+                            width: 326.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 115.w,
+                                  child: Row(
+                                    children: [
+                                      CustomIconButton(
+                                        size: 32.r,
+                                        iconSize: 16.r,
+                                        iconPath: 'assets/png/ball4.png',
+                                        borderRadius: 32,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Text(
+                                        matchModel.teamA,
+                                        style: AppTextStyles.ts14_400,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    TeamScore(),
+                                    SizedBox(width: 1),
+                                    TeamScore(),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 115.w,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        matchModel.teamB,
+                                        style: AppTextStyles.ts14_400,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      CustomIconButton(
+                                        size: 32.r,
+                                        iconSize: 16.r,
+                                        iconPath: 'assets/png/ball4.png',
+                                        borderRadius: 32,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 16.h),
@@ -136,7 +192,7 @@ class MatchCard extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     Image.asset(
-                      'assets/png/blue_rect.png',
+                      matchModel.matchType.smallRect,
                       width: 140.r,
                       height: 28.r,
                       fit: BoxFit.fill,
@@ -144,9 +200,9 @@ class MatchCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 10.r),
                       child: Text(
-                        "Official match",
+                        matchModel.matchType.name,
                         style: AppTextStyles.ts12_400.copyWith(
-                          color: AppTheme.blue2,
+                          color: matchModel.matchType.color,
                         ),
                       ),
                     ),

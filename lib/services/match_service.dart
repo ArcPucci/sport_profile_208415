@@ -26,6 +26,14 @@ class MatchesService {
     );
   }
 
+  Future<void> deleteMatch(int id) async {
+    await _database.delete(
+      matchesTable,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<List<MatchModel>> getMatches(int profileId) async {
     final maps = await _database.query(
       matchesTable,

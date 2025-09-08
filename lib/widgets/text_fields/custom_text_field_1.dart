@@ -15,8 +15,10 @@ class CustomTextField1 extends StatelessWidget {
     this.maxLength = 18,
     this.formatters,
     this.width,
+    this.canChange = true,
   });
 
+  final bool canChange;
   final double? width;
   final int? maxLength;
   final String title;
@@ -71,6 +73,7 @@ class CustomTextField1 extends StatelessWidget {
                     child: Text(title, style: AppTextStyles.ts12_500),
                   ),
                   TextField(
+                    readOnly: !canChange,
                     style: AppTextStyles.ts14_400,
                     controller: controller,
                     inputFormatters: [

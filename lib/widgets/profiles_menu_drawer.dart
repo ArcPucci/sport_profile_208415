@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:sport_profile_208415/providers/providers.dart';
 import 'package:sport_profile_208415/widgets/widgets.dart';
 
 import '../utils/utils.dart';
@@ -74,60 +76,113 @@ class _ProfilesMenuDrawerState extends State<ProfilesMenuDrawer>
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 24.w),
                       child: SafeArea(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 12.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Consumer<ProfilesProvider>(
+                          builder: (context, value, child) {
+                            return Column(
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 2.h),
-                                  child: Text(
-                                    "Menu",
-                                    style: AppTextStyles.ts20_600,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: _hideDrawer,
-                                  child: Image.asset(
-                                    'assets/png/close.png',
-                                    width: 24.r,
-                                    height: 24.r,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                padding: EdgeInsets.only(top: 24.h),
-                                child: Column(
-                                  children: List.generate(2, (index) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(bottom: 16.h),
-                                      child: Container(
-                                        width: 225.w,
-                                        height: 40.h,
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            bottom: BorderSide(
-                                              width: 1.sp,
-                                              color: AppTheme.grey,
-                                            ),
-                                          ),
-                                        ),
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          "Player #1",
-                                          style: AppTextStyles.ts16_500,
-                                        ),
+                                SizedBox(height: 12.h),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 2.h),
+                                      child: Text(
+                                        "Menu",
+                                        style: AppTextStyles.ts20_600,
                                       ),
-                                    );
-                                  }),
+                                    ),
+                                    GestureDetector(
+                                      onTap: _hideDrawer,
+                                      child: Image.asset(
+                                        'assets/png/close.png',
+                                        width: 24.r,
+                                        height: 24.r,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                          ],
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    padding: EdgeInsets.only(top: 24.h),
+                                    child: Column(
+                                      children: List.generate(
+                                        value.profiles.length,
+                                        (index) {
+                                          final profile = value.profiles[index];
+                                          final isSelected =
+                                              value.profile.id == profile.id;
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                              bottom: 16.h,
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: () =>
+                                                  value.setProfile(profile),
+                                              child: Container(
+                                                width: 225.w,
+                                                height: 40.h,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.transparent,
+                                                  border: Border(
+                                                    bottom: BorderSide(
+                                                      width: 1.sp,
+                                                      color: AppTheme.grey,
+                                                    ),
+                                                  ),
+                                                ),
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  profile.name ??
+                                                      "Player $index",
+                                                  style: AppTextStyles.ts16_500
+                                                      .copyWith(
+                                                        color: isSelected
+                                                            ? null
+                                                            : Colors.white
+                                                                  .withAlpha(
+                                                                    60,
+                                                                  ),
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 24.h),
+                                GestureDetector(
+                                  onTap: value.addProfile,
+                                  child: CustomContainer(
+                                    width: 225.w,
+                                    height: 40.h,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/png/plus2.png',
+                                          width: 16.r,
+                                          height: 16.r,
+                                          fit: BoxFit.fill,
+                                        ),
+                                        SizedBox(width: 8.w),
+                                        Text(
+                                          "Add New",
+                                          style: AppTextStyles.ts14_600,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 24.h),
+                              ],
+                            );
+                          },
                         ),
                       ),
                     ),

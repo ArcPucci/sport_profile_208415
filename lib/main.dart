@@ -183,12 +183,20 @@ class _MyAppState extends State<MyApp> {
         Provider(
           create: (context) => AchievementsService(widget.sqlService.database),
         ),
+        Provider(
+          create: (context) => MatchesService(widget.sqlService.database),
+        ),
         ChangeNotifierProvider(
           create: (context) =>
               AchievementsProvider(Provider.of(context, listen: false)),
         ),
         ChangeNotifierProvider(
+          create: (context) =>
+              MatchesProvider(Provider.of(context, listen: false)),
+        ),
+        ChangeNotifierProvider(
           create: (context) => ProfilesProvider(
+            Provider.of(context, listen: false),
             Provider.of(context, listen: false),
             Provider.of(context, listen: false),
             widget.configService,

@@ -9,15 +9,19 @@ class CustomCalendarButton extends StatelessWidget {
     super.key,
     required this.dateTime,
     required this.onDateSelected,
+    this.canTap = true,
   });
 
+  final bool canTap;
   final DateTime dateTime;
   final void Function(DateTime date) onDateSelected;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _showModalBottomSheet(context),
+      onTap: () {
+        if (canTap) _showModalBottomSheet(context);
+      },
       child: CustomContainer(
         width: 358.w,
         height: 72.h,

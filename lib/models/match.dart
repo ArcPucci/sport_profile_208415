@@ -28,6 +28,8 @@ class MatchModel {
     required this.stats,
   });
 
+  bool get isOver => created.isBefore(DateTime.now());
+
   factory MatchModel.empty() => MatchModel(
     id: 0,
     profileId: 0,

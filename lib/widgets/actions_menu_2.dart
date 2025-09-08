@@ -4,17 +4,17 @@ import 'package:sport_profile_208415/widgets/widgets.dart';
 
 import '../utils/utils.dart';
 
-class ActionsMenu extends StatefulWidget {
-  const ActionsMenu({super.key, this.onEdit, this.onDelete});
+class ActionsMenu2 extends StatefulWidget {
+  const ActionsMenu2({super.key, this.onEdit, this.onDelete});
 
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
 
   @override
-  State<ActionsMenu> createState() => _ActionsMenuState();
+  State<ActionsMenu2> createState() => _ActionsMenu2State();
 }
 
-class _ActionsMenuState extends State<ActionsMenu> {
+class _ActionsMenu2State extends State<ActionsMenu2> {
   final GlobalKey _buttonKey = GlobalKey();
   OverlayEntry? _overlayEntry;
 
@@ -109,9 +109,8 @@ class _ActionsMenuState extends State<ActionsMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomIconButton(
-      globalKey: _buttonKey,
-      iconPath: 'assets/png/dot_menu.png',
+    return GestureDetector(
+      key: _buttonKey,
       onTap: () {
         if (_overlayEntry == null) {
           _showPopup();
@@ -119,6 +118,16 @@ class _ActionsMenuState extends State<ActionsMenu> {
           _hidePopup();
         }
       },
+      child: Opacity(
+        opacity: 0.6,
+        child: Image.asset(
+          'assets/png/dot_menu.png',
+          width: 16.r,
+          height: 16.r,
+          color: Colors.white,
+          fit: BoxFit.fill,
+        ),
+      ),
     );
   }
 
