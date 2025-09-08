@@ -72,9 +72,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    final path = widget.configService.getFirstInit() ? '/welcome' : '/';
     router = GoRouter(
-      initialLocation: '/',
+      initialLocation: path,
       routes: [
+        GoRoute(
+          path: '/welcome',
+          builder: (context, state) => OnboardingScreen(),
+        ),
         ShellRoute(
           builder: (context, state, child) =>
               NavigationScreen(path: state.fullPath ?? '/', child: child),

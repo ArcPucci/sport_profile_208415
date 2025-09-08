@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:sport_profile_208415/services/services.dart';
 import 'package:sport_profile_208415/utils/utils.dart';
 import 'package:sport_profile_208415/widgets/widgets.dart';
 
@@ -125,6 +128,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void next() {
     if (_currentPage == assets.length - 1) {
+      context.read<ConfigService>().setFirstInit();
+      context.go('/');
       return;
     }
 
