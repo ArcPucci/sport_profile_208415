@@ -46,6 +46,7 @@ dependencies:
   path: ^1.9.1
   image_picker: ^1.2.0
   intl: ^0.20.2
+  video_player: ^2.9.1
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/png/
+    - assets/video/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,11 @@ void main() {
 
       final preferences = await SharedPreferences.getInstance();
       final configService = ConfigService(preferences);
+
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
 
       runApp(
         ScreenUtilInit(

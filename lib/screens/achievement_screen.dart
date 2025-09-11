@@ -26,100 +26,120 @@ class _AchievementScreenState extends State<AchievementScreen> {
   void initState() {
     super.initState();
     _achievementsProvider = Provider.of(context, listen: false);
+
+    titleController.addListener(() => setState(() {}));
+    descriptionController.addListener(() => setState(() {}));
+    xpController.addListener(() => setState(() {}));
   }
+
+  bool get canSave =>
+      _selectedCup != -1 &&
+      titleController.text.isNotEmpty &&
+      descriptionController.text.isNotEmpty &&
+      xpController.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.center,
       children: [
         Positioned.fill(
           child: SafeArea(
-            child: Column(
-              children: [
-                SizedBox(height: 16.h),
-                SizedBox(
-                  width: 358.w,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomIconButton(
-                        iconPath: 'assets/png/back.png',
-                        onTap: context.pop,
-                      ),
-                      Text(
-                        "General Data",
-                        style: AppTextStyles.ts14_600.copyWith(
-                          color: Colors.white,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 16.h),
+                  SizedBox(
+                    width: 358.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomIconButton(
+                          iconPath: 'assets/png/back.png',
+                          onTap: context.pop,
                         ),
-                      ),
-                      SizedBox(width: 40.r),
-                    ],
+                        Text(
+                          "General Data",
+                          style: AppTextStyles.ts14_600.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(width: 40.r),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 24.h),
-                CustomTextField1(
-                  title: 'Title',
-                  hasIcon: false,
-                  controller: titleController,
-                ),
-                SizedBox(height: 16.h),
-                CustomTextField1(
-                  title: 'Description',
-                  maxLength: 32,
-                  hasIcon: false,
-                  controller: descriptionController,
-                ),
-                SizedBox(height: 16.h),
-                CustomTextField2(
-                  title: 'Xp amount',
-                  hasIcon: false,
-                  suffix: 'xp',
-                  controller: xpController,
-                ),
-                SizedBox(height: 16.h),
-                CustomContainer(
-                  width: 358.w,
-                  height: 147.h,
-                  padding: EdgeInsets.only(
-                    top: 16.h,
-                    left: 16.w,
-                    right: 16.w,
-                    bottom: 25.h,
+                  SizedBox(height: 24.h),
+                  CustomTextField1(
+                    title: 'Title',
+                    hasIcon: false,
+                    controller: titleController,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Opacity(
-                        opacity: 0.4,
-                        child: Text("Cup", style: AppTextStyles.ts12_400),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List.generate(cupTypes.length, (index) {
-                          final cup = cupTypes[index];
-                          return Opacity(
-                            opacity: _selectedCup == index ? 1 : 0.4,
-                            child: GestureDetector(
-                              onTap: () => setState(() => _selectedCup = index),
-                              child: Image.asset(
-                                cup.asset,
-                                width: 72.r,
-                                height: 72.r,
-                                alignment: Alignment.topCenter,
-                                fit: BoxFit.cover,
+                  SizedBox(height: 16.h),
+                  CustomTextField1(
+                    title: 'Description',
+                    maxLength: 32,
+                    hasIcon: false,
+                    controller: descriptionController,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextField2(
+                    title: 'Xp amount',
+                    hasIcon: false,
+                    suffix: 'xp',
+                    controller: xpController,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomContainer(
+                    width: 358.w,
+                    height: 147.h,
+                    padding: EdgeInsets.only(
+                      top: 16.h,
+                      left: 16.w,
+                      right: 16.w,
+                      bottom: 25.h,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Opacity(
+                          opacity: 0.4,
+                          child: Text("Cup", style: AppTextStyles.ts12_400),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List.generate(cupTypes.length, (index) {
+                            final cup = cupTypes[index];
+                            return Opacity(
+                              opacity: _selectedCup == index ? 1 : 0.4,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    setState(() => _selectedCup = index),
+                                child: Image.asset(
+                                  cup.asset,
+                                  width: 72.r,
+                                  height: 72.r,
+                                  alignment: Alignment.topCenter,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Spacer(),
-                LabeledButton2(title: "Save", onTap: onSave),
-                SizedBox(height: 16.h),
-              ],
+                ],
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 16.h,
+          child: SafeArea(
+            child: Opacity(
+              opacity: canSave ? 1 : 0.6,
+              child: LabeledButton2(title: "Save", onTap: onSave),
             ),
           ),
         ),

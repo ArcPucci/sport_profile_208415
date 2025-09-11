@@ -75,6 +75,7 @@ class CustomTextField1 extends StatelessWidget {
                   TextField(
                     readOnly: !canChange,
                     style: AppTextStyles.ts14_400,
+                    textInputAction: TextInputAction.done,
                     controller: controller,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(maxLength),

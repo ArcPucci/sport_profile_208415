@@ -5,7 +5,9 @@ import 'package:sport_profile_208415/widgets/widgets.dart';
 import '../utils/utils.dart';
 
 class TeamScore extends StatelessWidget {
-  const TeamScore({super.key});
+  const TeamScore({super.key, this.score});
+
+  final int? score;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,12 @@ class TeamScore extends StatelessWidget {
           ],
         ),
         alignment: Alignment.center,
-        child: Text(
-          "-",
-          style: AppTextStyles.ts16_500.copyWith(color: Colors.white),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            score?.toString() ?? "-",
+            style: AppTextStyles.ts16_500.copyWith(color: Colors.white),
+          ),
         ),
       ),
     );

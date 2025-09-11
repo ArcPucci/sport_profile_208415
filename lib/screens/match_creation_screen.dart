@@ -48,7 +48,20 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
       scoreBController.text = match.scoreB.toString();
       stats = List.from(match.stats);
     }
+
+    durationController.addListener(() => setState(() {}));
+    teamAController.addListener(() => setState(() {}));
+    scoreAController.addListener(() => setState(() {}));
+    teamBController.addListener(() => setState(() {}));
+    scoreBController.addListener(() => setState(() {}));
   }
+
+  bool get canNextStep =>
+      durationController.text.trim().isNotEmpty &&
+      teamAController.text.trim().isNotEmpty &&
+      scoreAController.text.trim().isNotEmpty &&
+      teamBController.text.trim().isNotEmpty &&
+      scoreBController.text.trim().isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -204,11 +217,14 @@ class _MatchCreationScreenState extends State<MatchCreationScreen> {
                   borderRadius: 20,
                   onTap: onBack,
                 ),
-                LabeledButton2(
-                  title: 'Next Step',
-                  width: 171.w,
-                  borderRadius: 20,
-                  onTap: onNext,
+                Opacity(
+                  opacity: canNextStep ? 1 : 0.6,
+                  child: LabeledButton2(
+                    title: 'Next Step',
+                    width: 171.w,
+                    borderRadius: 20,
+                    onTap: onNext,
+                  ),
                 ),
               ],
             ),

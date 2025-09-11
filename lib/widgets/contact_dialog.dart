@@ -87,6 +87,7 @@ class ContactDialog extends StatelessWidget {
                             child: TextField(
                               maxLines: null,
                               style: AppTextStyles.ts14_400,
+                              textInputAction: TextInputAction.done,
                               decoration: InputDecoration.collapsed(
                                 hintText: 'Leave your message',
                                 hintStyle: AppTextStyles.ts14_400.copyWith(

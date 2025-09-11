@@ -35,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
               SizedBox(height: 16.h),
               SettingsButton(
                 icon: 'assets/png/trash.png',
-                text: 'Delete account',
+                text: 'Delete player',
                 iconColor: AppTheme.green5,
                 onTap: () => showConfirmationDialog2(
                   context,

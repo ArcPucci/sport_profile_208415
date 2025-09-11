@@ -11,8 +11,10 @@ class SkillCounter extends StatelessWidget {
     required this.value,
     this.onIncrease,
     this.onDecrease,
+    this.max = 250,
   });
 
+  final int max;
   final String title;
   final int value;
   final VoidCallback? onIncrease;
@@ -20,6 +22,8 @@ class SkillCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final canIncrease = value < max;
+    final canDecrease = value > 0;
     return CustomPaint(
       painter: InnerShadowRRectPainter(
         blur: 40,
@@ -43,10 +47,13 @@ class SkillCounter extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CustomIconButton(
-              iconPath: 'assets/png/minus.png',
-              borderRadius: 999,
-              onTap: onDecrease,
+            Opacity(
+              opacity: canDecrease ? 1 : 0.6,
+              child: CustomIconButton(
+                iconPath: 'assets/png/minus.png',
+                borderRadius: 999,
+                onTap: canDecrease ? onDecrease : null,
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,10 +68,13 @@ class SkillCounter extends StatelessWidget {
                 Text("$value", style: AppTextStyles.ts14_400),
               ],
             ),
-            CustomIconButton(
-              iconPath: 'assets/png/plus.png',
-              borderRadius: 999,
-              onTap: onIncrease,
+            Opacity(
+              opacity: canIncrease ? 1 : 0.6,
+              child: CustomIconButton(
+                iconPath: 'assets/png/plus.png',
+                borderRadius: 999,
+                onTap: canIncrease ? onIncrease : null,
+              ),
             ),
           ],
         ),

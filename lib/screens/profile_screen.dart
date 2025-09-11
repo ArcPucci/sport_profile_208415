@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
                       bottom: false,
                       child: ProfileCard(profile: value2.profile),
                     ),
-                    SizedBox(height: 32.h),
+                    SizedBox(height: 8.h),
                     SizedBox(
                       width: 358.w,
                       child: Row(

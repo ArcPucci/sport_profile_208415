@@ -8,7 +8,7 @@ class StatsProvider extends ChangeNotifier {
 
   int _profileId = 0;
 
-  final List<MatchModel> _lastMatches = [];
+  List<MatchModel> _lastMatches = [];
 
   final List<MatchModel> _matches = [];
 
@@ -73,9 +73,11 @@ class StatsProvider extends ChangeNotifier {
     _lastMatches.clear();
     final list = await _matchesService.getMatches(_profileId);
 
+    _lastMatches.addAll(list.reversed.take(7).toList());
+    _lastMatches = List.from(_lastMatches.reversed);
+
     for (var match in list) {
       if (match.isOver) {
-        if (_lastMatches.length < 7) _lastMatches.add(match);
         _matches.add(match);
       }
     }

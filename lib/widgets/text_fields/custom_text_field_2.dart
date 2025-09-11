@@ -75,7 +75,7 @@ class CustomTextField2 extends StatelessWidget {
                   TextField(
                     readOnly: !canChange,
                     style: AppTextStyles.ts14_400,
-                    keyboardType: type ?? TextInputType.number,
+                    keyboardType: type,
                     textInputAction: TextInputAction.done,
                     controller: controller,
                     inputFormatters: [

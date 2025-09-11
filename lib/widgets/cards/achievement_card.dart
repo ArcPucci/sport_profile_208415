@@ -45,22 +45,17 @@ class AchievementCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
+                  SizedBox(
+                    height: 24.r,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         achievement.title,
                         style: AppTextStyles.ts14_600.copyWith(
                           color: AppTheme.green,
                         ),
                       ),
-                      Image.asset(
-                        'assets/png/dot_menu.png',
-                        width: 24.r,
-                        height: 24.r,
-                        fit: BoxFit.fill,
-                      ),
-                    ],
+                    ),
                   ),
                   Opacity(
                     opacity: 0.6,

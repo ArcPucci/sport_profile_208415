@@ -140,9 +140,17 @@ class MatchCard extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    TeamScore(),
+                                    TeamScore(
+                                      score: matchModel.isOver
+                                          ? matchModel.scoreA
+                                          : null,
+                                    ),
                                     SizedBox(width: 1),
-                                    TeamScore(),
+                                    TeamScore(
+                                      score: matchModel.isOver
+                                          ? matchModel.scoreB
+                                          : null,
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
